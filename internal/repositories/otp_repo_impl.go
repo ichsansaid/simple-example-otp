@@ -29,18 +29,6 @@ func (o *OtpRepoImpl) Do(ctx context.Context, fn func(context.Context) error) er
 	}
 }
 
-// DeleteOtp implements OtpRepoInterface.
-func (o *OtpRepoImpl) DeleteOtp(ctx context.Context, userId string) error {
-	dbSelected := o.DB
-	if tx, ok := ctx.Value(TxKey{}).(*gorm.DB); ok {
-		dbSelected = tx
-	}
-	if err := dbSelected.Where("user_id = ?", userId).Delete(&entity.OtpEntity{}).Error; err != nil {
-		return err
-	}
-	return nil
-}
-
 // FindOtp implements OtpRepoInterface.
 func (o *OtpRepoImpl) FindOtp(ctx context.Context, userId string) (entity.OtpEntity, error) {
 	dbSelected := o.DB

@@ -27,7 +27,6 @@ func (o *OtpUcaseImpl) RequestOtp(ctx context.Context, userId string) (entity.Ot
 			return err
 		} else {
 			if otp.UserId == "" || otp.IsExpired(time.Now()) {
-
 				otp.UserId = userId
 				otp.CreateOtpCode()
 				if err := o.repo.SaveOtp(txCtx, otp); err != nil {
